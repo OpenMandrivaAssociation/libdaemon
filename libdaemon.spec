@@ -1,15 +1,17 @@
 %define major	0
 %define libname %mklibname daemon %{major}
+%define develname %mklibname daemon -d
 
 Name:		libdaemon
 Summary:	Lightweight C library which eases the writing of UNIX daemons
-Version:	0.10
-Release:	%mkrel 4
+Version:	0.11
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
 URL:		http://0pointer.de/lennart/projects/libdaemon/
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.bz2
-BuildRequires:	lynx doxygen
+BuildRequires:	lynx
+BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 
@@ -36,15 +38,14 @@ Obsoletes:	daemon
 %description -n %{libname}
 Dynamic libraries from %{name}.
 
-%package -n 	%{libname}-devel
+%package -n 	%{develname}
 Summary: 	Header files and static libraries from %{name}
 Group: 		Development/C
-Requires: 	%{libname} = %{version}
+Requires: 	%{libname} = %{version}-%{release}
 Provides: 	daemon-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release} 
-Obsoletes: 	%{name}-devel
+Obsoletes: 	%{libname}-devel
 
-%description -n %{libname}-devel
+%description -n %{develname}
 Libraries and includes files for developing programs based on %{name}.
 
 %prep
@@ -69,12 +70,10 @@ Libraries and includes files for developing programs based on %{name}.
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(644,root,root,755)
 %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
-
-
