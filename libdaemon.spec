@@ -2,9 +2,9 @@
 %define libname %mklibname daemon %{major}
 %define develname %mklibname daemon -d
 
-Name:		libdaemon
 Summary:	Lightweight C library which eases the writing of UNIX daemons
-Version:	0.11
+Name:		libdaemon
+Version:	0.12
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
@@ -43,6 +43,7 @@ Summary: 	Header files and static libraries from %{name}
 Group: 		Development/C
 Requires: 	%{libname} = %{version}-%{release}
 Provides: 	daemon-devel = %{version}-%{release}
+Provides: 	%{name}-devel = %{version}-%{release}
 Obsoletes: 	%{libname}-devel
 
 %description -n %{develname}
