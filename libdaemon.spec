@@ -12,6 +12,7 @@ URL:		http://0pointer.de/lennart/projects/libdaemon/
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.bz2
 BuildRequires:	lynx
 BuildRequires:	doxygen
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 
 %description
