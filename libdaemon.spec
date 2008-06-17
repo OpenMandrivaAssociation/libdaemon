@@ -5,7 +5,7 @@
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
 Version:	0.12
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		System/Libraries
 URL:		http://0pointer.de/lennart/projects/libdaemon/
