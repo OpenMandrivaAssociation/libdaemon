@@ -4,12 +4,12 @@
 
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
-Version:	0.12
-Release:	%mkrel 3
-License:	GPL
+Version:	0.13
+Release:	%mkrel 1
+License:	LGPLv2.1+
 Group:		System/Libraries
 URL:		http://0pointer.de/lennart/projects/libdaemon/
-Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.bz2
+Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.gz
 BuildRequires:	lynx
 BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
