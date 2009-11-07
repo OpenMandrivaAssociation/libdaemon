@@ -4,11 +4,11 @@
 
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
-Version:	0.13
-Release:	%mkrel 2
+Version:	0.14
+Release:	%mkrel 1
 License:	LGPLv2.1+
 Group:		System/Libraries
-URL:		http://0pointer.de/lennart/projects/libdaemon/
+URL:		http://0pointer.de/lennart/projects/libdaemon
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.gz
 BuildRequires:	lynx
 BuildRequires:	doxygen
@@ -55,11 +55,14 @@ Libraries and includes files for developing programs based on %{name}.
 %build
 %configure2_5x
 %make
-										
+
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall_std
+
+#(tpg) useless
+rm- rf %{buildroot}%{_datadir}/doc/libdaemon
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -77,6 +80,7 @@ Libraries and includes files for developing programs based on %{name}.
 
 %files -n %{develname}
 %defattr(644,root,root,755)
+%doc README
 %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_libdir}/*.a
