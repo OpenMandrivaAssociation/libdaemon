@@ -62,7 +62,7 @@ Libraries and includes files for developing programs based on %{name}.
 %makeinstall_std
 
 #(tpg) useless
-rm- rf %{buildroot}%{_datadir}/doc/libdaemon
+rm -rf %{buildroot}%{_datadir}/doc/libdaemon
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
