@@ -5,15 +5,13 @@
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
 Version:	0.14
-Release:	%mkrel 3
+Release:	4
 License:	LGPLv2.1+
 Group:		System/Libraries
 URL:		http://0pointer.de/lennart/projects/libdaemon
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.gz
 BuildRequires:	lynx
 BuildRequires:	doxygen
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
-
 
 %description
 libdaemon is a lightweight C library which eases the writing of UNIX daemons.
@@ -53,36 +51,22 @@ Libraries and includes files for developing programs based on %{name}.
 %setup -q
 
 %build
-%configure2_5x
+%configure2_5x \
+	--disable-static
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %makeinstall_std
 
 #(tpg) useless
 rm -rf %{buildroot}%{_datadir}/doc/libdaemon
 
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files -n %{libname}
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.%{major}*
+%{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(644,root,root,755)
 %doc README
 %{_includedir}/%{name}
 %{_libdir}/*.so
-%{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
+
