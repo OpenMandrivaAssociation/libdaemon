@@ -1,0 +1,32 @@
+diff -ur libdaemon-0.14/libdaemon/dpid.c libdaemon-0.14-bero/libdaemon/dpid.c
+--- libdaemon-0.14/libdaemon/dpid.c	2009-10-17 04:11:21.000000000 +0200
++++ libdaemon-0.14-bero/libdaemon/dpid.c	2012-12-19 17:30:02.739235452 +0100
+@@ -147,6 +147,28 @@
+         goto finish;
+     }
+ 
++#ifdef __linux__
++    {
++        char myexe[PATH_MAX], theirproc[PATH_MAX], theirexe[PATH_MAX];
++        int saved_errno = errno;
++        if(readlink("/proc/self/exe", myexe, PATH_MAX) < 0) {
++            errno = saved_errno;
++            goto finish;
++        }
++        snprintf(theirproc, PATH_MAX, "/proc/%lu/exe", (unsigned long)pid);
++        if(readlink(theirproc, theirexe, PATH_MAX) < 0) {
++            errno = saved_errno;
++            goto finish;
++        }
++        if(strcmp(myexe, theirexe)) {
++            daemon_log(LOG_WARNING, "Process %lu died; trying to remove PID file. (%s)", (unsigned long)pid, fn);
++            unlink(fn);
++            errno = saved_errno;
++            goto finish;
++        }
++    }
++#endif
++
+     ret = pid;
+ 
+ finish:

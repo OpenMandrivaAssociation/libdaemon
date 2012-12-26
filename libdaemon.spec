@@ -5,11 +5,12 @@
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
 Version:	0.14
-Release:	6
+Release:	7
 License:	LGPLv2.1+
 Group:		System/Libraries
 URL:		http://0pointer.de/lennart/projects/libdaemon
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.gz
+Patch0:		libdaemon-0.14-better-handling-of-stale-pidfiles.patch
 BuildRequires:	lynx
 BuildRequires:	doxygen
 
@@ -48,6 +49,7 @@ Libraries and includes files for developing programs based on %{name}.
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 %configure2_5x \
