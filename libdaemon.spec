@@ -1,6 +1,7 @@
 %define major 0
 %define libname %mklibname daemon %{major}
 %define develname %mklibname daemon -d
+%bcond_with	crosscompile
 
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
@@ -52,6 +53,9 @@ Libraries and includes files for developing programs based on %{name}.
 %apply_patches
 
 %build
+%if %{with crosscompile}
+export ac_cv_func_setpgrp_void=yes
+%endif
 %configure2_5x \
 	--disable-static
 %make
