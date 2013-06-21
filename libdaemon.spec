@@ -49,7 +49,6 @@ Obsoletes:	%{libname}-devel < 0.14-6
 Libraries and includes files for developing programs based on %{name}.
 
 %prep
-r
 %setup -q
 %apply_patches
 
