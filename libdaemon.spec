@@ -51,6 +51,7 @@ Libraries and includes files for developing programs based on %{name}.
 %prep
 %setup -q
 %apply_patches
+autoreconf -fiv
 
 %build
 %if %{with crosscompile}
