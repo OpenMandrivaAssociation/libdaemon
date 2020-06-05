@@ -1,12 +1,21 @@
+# libdaemon is used by avahi,
+# avahi is used by pulseaudio,
+# pulseaudio is used by wine
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define major	0
 %define libname %mklibname daemon %{major}
 %define devname %mklibname daemon -d
+%define lib32name %mklib32name daemon %{major}
+%define dev32name %mklib32name daemon -d
 %bcond_with	crosscompile
 
 Summary:	Lightweight C library which eases the writing of UNIX daemons
 Name:		libdaemon
 Version:	0.14
-Release:	19
+Release:	20
 License:	LGPLv2.1+
 Group:		System/Libraries
 Url:		http://0pointer.de/lennart/projects/libdaemon
@@ -42,27 +51,57 @@ Summary:	Header files and static libraries from %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	daemon-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{libname}-devel < 0.14-6
 
 %description -n %{devname}
 Libraries and includes files for developing programs based on %{name}.
 
+%if %{with compat32}
+%package -n 	%{lib32name}
+Summary:	Dynamic libraries from %{name} (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+Dynamic libraries from %{name}.
+
+%package -n 	%{dev32name}
+Summary:	Header files and static libraries from %{name} (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n %{dev32name}
+Libraries and includes files for developing programs based on %{name}.
+%endif
+
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 autoreconf -fiv
 
-%build
-%if %{with crosscompile}
-export ac_cv_func_setpgrp_void=yes
+export CONFIGURE_TOP="$(pwd)"
+
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32
+cd ..
 %endif
-%configure2_5x \
-	--disable-static
-%make
+
+mkdir build
+cd build
+%configure
+
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 %install
-%makeinstall_std
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 
 #(tpg) useless
 rm -rf %{buildroot}%{_datadir}/doc/libdaemon
@@ -76,3 +115,11 @@ rm -rf %{buildroot}%{_datadir}/doc/libdaemon
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libdaemon.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%{_prefix}/lib/pkgconfig/*.pc
+%endif
