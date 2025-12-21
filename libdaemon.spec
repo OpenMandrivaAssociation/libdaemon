@@ -21,6 +21,11 @@ Group:		System/Libraries
 Url:		https://0pointer.de/lennart/projects/libdaemon
 Source0:	http://0pointer.de/lennart/projects/libdaemon/%{name}-%{version}.tar.gz
 Patch0:		libdaemon-0.14-better-handling-of-stale-pidfiles.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	lynx
 
